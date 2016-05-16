@@ -2,7 +2,8 @@ FROM debian:jessie
 
 COPY init.sh /etc/init.sh
 
-RUN wget -O - http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.9/rsa.pub | apt-key add - \
+RUN apt-get update && apt-get install -y wget \
+    && wget -O - http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.9/rsa.pub | apt-key add - \
     && echo deb http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.9/Debian/jessie/apt jessie main > /etc/apt/sources.list.d/gluster.list \
     && apt-get update && apt-get -y install glusterfs-server glusterfs-client && apt-get clean \
     && chmod a+x /etc/init.sh
